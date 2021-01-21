@@ -69,8 +69,5 @@ namespace MathAlgorithms.mymaths
                     a[r, c] = 0;
             }
         } //αποθηκεύει στον A τον L από τον Cholesky. (ουσιαστικά 3 μετατροπες έγιναν) (Ασκηση 6 από το word)
-
-
-
     }
 }

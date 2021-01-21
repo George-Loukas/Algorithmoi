@@ -185,5 +185,74 @@ namespace MathAlgorithms.mymaths
             }
             return A;
         }
+        public double DetSqrMatrix(double[,] mat)
+        {
+
+            double D = 0; // Initialize result
+            int n = mat.GetLength(0);
+            //  Base case : if matrix contains single element
+            if (n == 1)
+                return mat[0,0];
+
+            double[,] temp=new double[n,n]; // To store cofactors
+
+            int sign = 1; // To store sign multiplier
+
+            // Iterate for each element of first row
+            for (int f = 0; f < n; f++)
+            {
+                // Getting Cofactor of mat[0][f]
+                getCofactor(mat, temp, 0, f, n);
+                D += sign * mat[0,f] * DetSqrMatrix(temp);
+
+                // terms are to be added with alternate sign
+                sign = -sign;
+            }    
+         return D;
+            void getCofactor(double[,] mata, double[,] tempa, int p, int q, int m)
+            {
+                int i = 0, j = 0;
+
+                // Looping for each element of the matrix
+                for (int row = 0; row < m; row++)
+                {
+                    for (int col = 0; col < m; col++)
+                    {
+                        //  Copying into temporary matrix only those
+                        //  element which are not in given row and
+                        //  column
+                        if (row != p && col != q)
+                        {
+                            tempa[i, j++] = mata[row, col];
+
+                            // Row is filled, so increase row index and
+                            // reset col index
+                            if (j == m - 1)
+                            {
+                                j = 0;
+                                i++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        public double[,] AddMatrix(double[,] A,double[,] B)
+        {
+            double[,] C = new double[A.GetLength(0), A.GetLength(1)];
+            for (int i = 0; i < A.GetLength(0); i++)
+                for (int j = 0; j < A.GetLength(1); j++)
+                    C[i, j] = A[i, j] + B[i, j];
+            return C;
+        }
+        public double[,] SubMatrix(double[,] A, double[,] B)
+        {
+            double[,] C = new double[A.GetLength(0), A.GetLength(1)];
+            for (int i = 0; i < A.GetLength(0); i++)
+                for (int j = 0; j < A.GetLength(1); j++)
+                    C[i, j] = A[i, j] - B[i, j];
+            return C;
+        }
+
     }
 }

@@ -137,6 +137,7 @@ namespace MathAlgorithms.mymaths
             Console.WriteLine("O U");
             mymaths.Matrices.PrintMatrix(u);
         } //ουσιαστικά είναι η άσκηση 4 από το word. Αποθηκεύει στον Α τους LU (η διαγώνιος είναι μονο του L *έχω αφαιρέσει τους άσσους)
+
     }
 }
 

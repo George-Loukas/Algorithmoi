@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MathAlgorithms.mymaths
 {
-    class COO
+    class CSRCSC
     {
         public static (double[], int[], int[]) CsrParameters(double[,] A)
         {
@@ -77,7 +77,6 @@ namespace MathAlgorithms.mymaths
 
             return (values, rowindices, coloffset);
         }
-
         public static int nnm(double[,] A)
         {
             int d = A.GetLength(0);
