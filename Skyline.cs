@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -27,32 +27,32 @@ namespace Algorithms2020
 
         //Skyline for symmetric A
         //Skyline: 2 arrays (1D) are needed. Values(nnz), DiagOffsets(n+1)
+
         public static (double[], int[]) SkylineArrays(double[,] A)
         {
             int n = A.GetLength(0);
-            int nnz = CSR.NNZ(A, n);
+            (int nnz,int[] max) = SkylineNNZ(A);
             double[] SkylineValues = new double[nnz];
             int[] SkylineDiagOffsets = new int[n + 1];
+            bool p;
             int k = 0;
-            int l = 0;
-            int p;
-            for (int j = 0; j < n; j++)
+            int[] maxh = new int[n];
+            SkylineValues[0] = A[0, 0];
+            for (int j = 1; j < n; j++)
             {
-                p = 1;
-                for (int i = j; i >= 0; i--)
+                p = true;
+                for (int i = j; i > j - maxh[j] + 1 ; i--)
                 {
-                    if (A[i, j] != 0)
+                    SkylineValues[k] = A[i, j];
+                    Console.WriteLine(" " + i + " " + j + " " + k);
+                    if (p)
                     {
-                        SkylineValues[k] = A[i, j];
-                        if (p == 1)
-                        {
-                            SkylineDiagOffsets[l] = k;
-                            l++;
-                            p = 0;
-                        }
-                        k = k + 1;
+                        p = false;
+                        SkylineDiagOffsets[j] = k;
                     }
+                    k++;
                 }
+
             }
             SkylineDiagOffsets[n] = nnz;
 
@@ -67,13 +67,44 @@ namespace Algorithms2020
             return (SkylineValues, SkylineDiagOffsets);
         }
 
+        public static (int, int[]) SkylineNNZ(double[,] A)
+        {
+
+            int nnz, i;
+            nnz = 0;
+            int[] maxh = new int[A.GetLength(0)];
+            
+            for (int j = 0; j < A.GetLength(0); j++)
+            {
+                i = 0;
+                while (i <= j)
+                {
+                    if (A[i,j] != 0)
+                    {
+                        maxh[j] = j - i;
+                        nnz += j - i + 1; // ??????????????????
+                        goto start;
+                    }
+                    i++;
+                }
+            start:;
+            }
+
+            Console.WriteLine("The value of nnz for Skyline is " + nnz);
+            Console.WriteLine("The array maxh is ");
+            Utilities.PrintVectorInt(maxh);
+            Console.ReadLine();
+
+            return (nnz, maxh);
+        }
+
         public static void TestSkylineArrays()
         {
             double[,] A = new double[5, 5];
             A[0, 0] = 1;
-            A[0, 1] = -1;
+            A[0, 1] = 1;
             A[0, 2] = 0;
-            A[0, 3] = -3;
+            A[0, 3] = 3;
             A[0, 4] = 0;
             A[1, 1] = 5;
             A[1, 2] = 0;
@@ -84,7 +115,7 @@ namespace Algorithms2020
             A[2, 4] = 4;
             A[3, 3] = 7;
             A[3, 4] = 0;
-            A[4, 4] = -5;
+            A[4, 4] = 5;
             for (int i = 0; i < 5; i++)
             {
                 for (int j = i; j < 0; j--)
@@ -94,10 +125,52 @@ namespace Algorithms2020
             }
 
             Console.WriteLine("Ο Πίνακας Α που θέλουμε αποθηκεύσουμε σε Skyline Form");
-            Utilities.PrintSqrMatrix(5, A);
+            Utilities.PrintMatrix(A);
             Console.WriteLine("");
 
             (double[] Values,int[] DiadOffsets) = SkylineArrays(A);
         }
+
+        //Devire Cholesky L matrix from Skyline Format Storage
+        //public static double[,] CholeskyLSkyline(double[] SkylineValues, int[] SkylineDiagOffsets)
+        //{
+        //    int n = SkylineDiagOffsets.Length - 1;
+        //    int[] h = new int[n];
+        //    int[] m = new int[n];
+        //    for (int j = 0; j < n; j++)
+        //    {
+        //        h[j] = SkylineDiagOffsets[j + 1] - SkylineDiagOffsets[j] - 1;
+        //        m[j] = j - h[j];
+        //    }
+        //    double[,] L = new double[n, n];
+        //    double sum;
+        //    for (int i = 0; i <= n; i++)
+        //    { 
+        //        for (int j = m[i]; j >= i; j--)
+        //        {
+        //            sum = sum + SkylineValues[j] * SkylineValues[j];
+        //            L[i, j] = (1 / SkylineValues[i]) * (SkylineValues[j] - sum);
+        //        }
+        //        L[i,i] = 
+
+        //            L[i,i] = Math.Sqrt(SkylineValues[j] - sum);
+        //        }
+        //        else
+        //        {
+        //            sum = 0;
+        //            for (int j = m[i]; j >= i - 1; j--)
+        //            {
+        //            sum = sum + SkylineValues[j] * SkylineValues[j];
+        //            }
+        //            L[i, j] = Math.Sqrt(SkylineValues[j] - sum);
+
+        //    }
+                
+        //        {
+        //            sum = sum + SkylineValues[j] * SkylineValues[j];
+        //        }
+
+        //    }
+
+        }
     }
-}
