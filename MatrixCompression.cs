@@ -83,8 +83,6 @@ namespace MathAlgorithms.mymaths
             int[] diagoffset;
             (values, diagoffset) = Val(A);
 
-
-
              (int,int[]) NNZ(double[,] a)
             {
                 bool flag = false;
@@ -111,7 +109,6 @@ namespace MathAlgorithms.mymaths
                 Console.ReadLine();
                 return (numbersnonzero,b);
             } // Check ok
-
              (double[],int[]) Val(double[,] b)
             {
                 int n = b.GetLength(0);
@@ -138,21 +135,10 @@ namespace MathAlgorithms.mymaths
                         k++;
                     }
                 }
-
-
-
-
-
-
                 return (val,diagoff);
             }
-       
             return (values, diagoffset);
         }
-
-
-
-
         public static int nnm(double[,] A)
         {
             int d = A.GetLength(0);
@@ -170,6 +156,57 @@ namespace MathAlgorithms.mymaths
             Console.WriteLine(" ");
             Console.WriteLine("Το μητρώο περιέχει " + counter + " μη μηδενικές εισαγωγές");
             return (counter);
+        }
+        public static (double[],int[],int[]) COO(double[,] A)
+        {
+            double[] values = new double[nnm(A)];
+            int[] rows = new int[nnm(A)];
+            int[] columns = new int[nnm(A)];
+            int k = 0;
+            for (int i = 0; i < A.GetLength(0); i++)
+            {
+                for (int j = 0; j < A.GetLength(1) ; j++)
+                {
+                    if (A[i, j] != 0)
+                    {
+                        values[k]= A[i, j];
+                        rows[k] = i;
+                        columns[k] = j;
+                        k++;
+
+                    }
+                }
+
+            }
+            return (values, rows, columns);
+        }
+        public static double[,] BandedSym(double[,] A)
+        {
+            int bandwith=3;
+            int n = A.GetLength(0);
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = n - 1; j > i; j--)
+                {
+                    if (A[i, j] != 0 && (j - i + 1) > bandwith)
+                    {
+                        bandwith = j - i + 1;
+                    }
+                }
+            }
+            double[,] band = new double[bandwith, n];
+                for (int col = 0; col < bandwith; col++)
+                {
+                    for (int row = 0; row < n; row++)
+                    {
+                        if(row + col  < n)
+                            band[col, row] = A[row, row+col];
+                        else
+                            band[col, row] = 0;
+
+                    }
+                }
+            return band;
         }
 
     }
