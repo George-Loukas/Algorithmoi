@@ -52,7 +52,6 @@ namespace MathAlgorithms.mymaths
             Vectors.PrintDoubleVector(x);
             return x;
         }
-
         public static void test()
         {
             Console.WriteLine("[][][][][][][][][][][][][][][][][][][][][][][][]");
@@ -88,7 +87,5 @@ namespace MathAlgorithms.mymaths
             Console.WriteLine("[][][][][][][][][][][][][][][][][][][][][][][][]");
             Console.ReadKey();
         }
-
-
     }
 }

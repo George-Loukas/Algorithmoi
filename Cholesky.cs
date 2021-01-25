@@ -35,7 +35,7 @@ namespace MathAlgorithms.mymaths
                 }
 
             return ret;
-        }
+        } // επιστρέφει τον L
         public static void ChoLtoA(ref double[,] a)
         {
             int n = (int)Math.Sqrt(a.Length);

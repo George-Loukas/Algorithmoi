@@ -28,7 +28,6 @@ namespace MathAlgorithms.mymaths
             }
             return x;
         }
-
         public static double[] LUFrontSubstitution(double[,] L, double[] b) 
         {
             int n = L.GetLength(0);
@@ -48,7 +47,6 @@ namespace MathAlgorithms.mymaths
             return y;
 
         } //Χρήση μόνο στην LU, ή Cholesky(πρέπει να επαληθευτεί)
-
         public static double[] LUBackSubstitution(double[,] U, double[] b) 
         {
             int n = U.GetLength(0);

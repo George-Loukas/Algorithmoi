@@ -168,7 +168,7 @@ namespace MathAlgorithms.mymaths
             }
             else if (c == 1)
             {
-                n = Math.Abs(random.Next(3, 5));
+                n = Math.Abs(random.Next(3, 4));
             }
             else
             {
@@ -181,6 +181,19 @@ namespace MathAlgorithms.mymaths
                 for (int j = 0; j < n; j++)
                 {
                     A[i,j]= random.Next(-10,10);
+                }
+            }
+            return A;
+        }
+        public static double[,] MakeSymmMatrix(double[,] A)
+        {
+            int n = A.GetLength(0);
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = i; j < n; j++)
+                {
+                    if (A[i, j] != A[j, j])
+                        A[i, j] = A[j, i];
                 }
             }
             return A;
@@ -294,5 +307,34 @@ namespace MathAlgorithms.mymaths
             }
             return (L, U, D);
         } // σπάει τον πίνακα Α σε Upper Lower Diagonal (3 πινακες που περιεχουν τα στοιχεία του)
+        public static double[,] ScalarMultiWithMatrix(double k, double[,] B)
+        {
+            double[,] C = new double[B.GetLength(0), B.GetLength(1)];
+            for (int i = 0; i < B.GetLength(0); i++)
+                for (int j = 0; j < B.GetLength(1); j++)
+                    C[i, j] = k*B[i, j];
+            return C;
+        }
+        public static double[,] MultiplyScalarWithMatrix(double[,] A, double w)
+        {
+            double[,] a = new double[A.GetLength(0), A.GetLength(1)];
+            for (int i = 0; i < A.GetLength(0); i++)
+                for (int j = 0; j < A.GetLength(1); j++)
+                    a[i, j] = w * A[i, j];
+            return a;
+        }
+        static double[,] GetLowerPartOfMatrix(double[,] matrix, int startFrom)
+        {
+            double[,] result = new double[matrix.GetLength(0) - startFrom, matrix.GetLength(1) - startFrom];
+            for (int i = startFrom; i < matrix.GetLength(0); i++)
+            {
+                for (int j = startFrom; j < matrix.GetLength(1); j++)
+                {
+                    result[i - startFrom, j - startFrom] = matrix[i, j];
+                }
+            }
+
+            return result;
+        }  // κρατάει μόνο το κατω μέρος από τη γραμμη startfrom
     }
 }

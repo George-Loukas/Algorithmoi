@@ -232,7 +232,5 @@ namespace MathAlgorithms.mymaths
             }
             return b;
         } // generates vector with diamension n (n is given)
-
-
     }
 }
